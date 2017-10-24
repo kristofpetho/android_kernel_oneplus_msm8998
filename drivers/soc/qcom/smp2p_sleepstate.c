@@ -16,8 +16,10 @@
 #include <linux/suspend.h>
 #include "smp2p_private.h"
 
+#define SET_DELAY (2 * HZ)
 #define PROC_AWAKE_ID 12 /* 12th bit */
-int slst_gpio_base_id;
+
+static int slst_gpio_base_id;
 
 /**
  * sleepstate_pm_notifier() - PM notifier callback function.
@@ -33,11 +35,11 @@ static int sleepstate_pm_notifier(struct notifier_block *nb,
 {
 	switch (event) {
 	case PM_SUSPEND_PREPARE:
-		//gpio_set_value(slst_gpio_base_id + PROC_AWAKE_ID, 0);
+		gpio_set_value(slst_gpio_base_id + PROC_AWAKE_ID, 0);
 		break;
 
 	case PM_POST_SUSPEND:
-		//gpio_set_value(slst_gpio_base_id + PROC_AWAKE_ID, 1);
+		gpio_set_value(slst_gpio_base_id + PROC_AWAKE_ID, 1);
 		break;
 	}
 	return NOTIFY_DONE;
@@ -61,7 +63,6 @@ static int smp2p_sleepstate_probe(struct platform_device *pdev)
 				__func__, slst_gpio_base_id);
 		return slst_gpio_base_id;
 	}
-
 
 	gpio_set_value(slst_gpio_base_id + PROC_AWAKE_ID, 1);
 
