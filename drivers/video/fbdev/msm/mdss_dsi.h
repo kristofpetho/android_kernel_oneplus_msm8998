@@ -616,8 +616,6 @@ struct mdss_dsi_ctrl_pdata {
 	int panel_hour_index;
 	int panel_min_index;
 	int disp_vci_en_gpio;
-	struct delayed_work techeck_work;
-	struct completion te_comp;
 	const char *px_clk_src_name;
 	struct	clk	*px_clk_src;
 	int px_clk_enabled;
