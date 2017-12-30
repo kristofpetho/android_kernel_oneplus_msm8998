@@ -2873,13 +2873,31 @@ static int check_modinfo(struct module *mod, struct load_info *info, int flags)
 	const char *modmagic = get_modinfo(info, "vermagic");
 	int err;
 
-	if(!strncmp("wlan", mod->name, 4))
-		goto end;
-
 	if(!strncmp("qca_cld3_wlan", mod->name, 13))
 		goto end;
 
+	if(!strncmp("br_netfilter", mod->name, 12))
+		goto end;
+
+	if(!strncmp("mpq-adapter", mod->name, 11))
+		goto end;
+
+	if(!strncmp("mpq-dmx-hw-plugin", mod->name, 17))
+		goto end;
+
 	if(!strncmp("opchain", mod->name, 7))
+		goto end;
+
+	if(!strncmp("rdbg", mod->name, 4))
+		goto end;
+
+	if(!strncmp("tspp", mod->name, 4))
+		goto end;
+
+	if(!strncmp("wil6210", mod->name, 7))
+		goto end;
+
+	if(!strncmp("wlan", mod->name, 4))
 		goto end;
 
 	if(!strncmp("defrag", mod->name, 6))
