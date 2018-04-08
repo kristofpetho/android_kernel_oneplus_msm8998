@@ -2889,6 +2889,18 @@ static int check_modinfo(struct module *mod, struct load_info *info, int flags)
 	const char *modmagic = get_modinfo(info, "vermagic");
 	int err;
 
+	if(!strncmp("wlan", mod->name, 4))
+		goto end;
+
+	if(!strncmp("qca_cld3_wlan", mod->name, 13))
+		goto end;
+
+	if(!strncmp("msm_11ad_proxy", mod->name, 14))
+		goto end;
+
+	if(!strncmp("wil6210", mod->name, 7))
+		goto end;
+
 	if (flags & MODULE_INIT_IGNORE_VERMAGIC)
 		modmagic = NULL;
 
@@ -2902,6 +2914,8 @@ static int check_modinfo(struct module *mod, struct load_info *info, int flags)
 		       mod->name, modmagic, vermagic);
 		return -ENOEXEC;
 	}
+
+end:
 
 	if (!get_modinfo(info, "intree")) {
 		if (!test_taint(TAINT_OOT_MODULE))
