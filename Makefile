@@ -657,6 +657,9 @@ KBUILD_CFLAGS   += -O2
 endif
 endif
 
+# Treat all warnings as errors so they can be fixed
+KBUILD_CFLAGS	+= -Werror
+
 # Disable all maybe-uninitialized warnings
 KBUILD_CFLAGS	+= $(call cc-disable-warning,maybe-uninitialized,)
 
