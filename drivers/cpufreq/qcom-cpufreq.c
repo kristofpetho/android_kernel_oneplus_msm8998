@@ -23,7 +23,7 @@
 #include <linux/cpu.h>
 #include <linux/cpumask.h>
 #include <linux/suspend.h>
-#include <linux/clk/msm-clk-provider.h>
+#include <linux/clk.h>
 #include <linux/err.h>
 #include <linux/platform_device.h>
 #include <linux/of.h>
@@ -406,7 +406,6 @@ static int __init msm_cpufreq_probe(struct platform_device *pdev)
 			return PTR_ERR(c);
 		else if (IS_ERR(c))
 			c = cpu_clk[cpu-1];
-		c->flags |= CLKFLAG_NO_RATE_CACHE;
 		cpu_clk[cpu] = c;
 	}
 	hotplug_ready = true;
@@ -487,14 +486,7 @@ static void c0_cpufreq_limit(struct work_struct *work)
 			LITTLE_CPU_QOS_FREQ, CPUFREQ_RELATION_H);
 		cpufreq_cpu_put(policy);
 	}
-
-	if (c0)
-		//sched_set_boost(1);
-}
-
-static void c0_cpufreq_limit(struct work_struct *work)
-{
-	__cpufreq_limit(true);
+	//sched_set_boost(1);
 }
 
 void c0_cpufreq_limit_queue(void)
